@@ -10,5 +10,6 @@ public class main {
         System.out.println("4. SALIR Y NO COMER NADA (jaja jodidos no les alcanzo)");
         System.out.println("ingrese su seleccion:");
         int choise = scanner.nextInt();
+
     }
 }
