@@ -1,11 +1,14 @@
+package lista;
+
 public class C_enlazadas<T> {
     private NodoCircular<T> head;
 
     public C_enlazadas() {
         head = null;
     }
-/// awebo copiar y pegar de nuevo aca se insercan las cosas en el nodo
-    public void insertar(T dato) {
+
+    // AGREGAR
+    public void agregar(T dato) {
         NodoCircular<T> nuevo = new NodoCircular<>(dato);
         if (head == null) {
             head = nuevo;
@@ -19,22 +22,15 @@ public class C_enlazadas<T> {
             nuevo.setSiguiente(head);
         }
     }
-///  aca se eliminan
+
+    // ELIMINAR
     public boolean eliminar(T dato) {
         if (head == null) return false;
-        NodoCircular<T> actual = head;
-        NodoCircular<T> previo = null;
-
+        NodoCircular<T> actual = head, anterior = null;
         do {
             if (actual.getDato().equals(dato)) {
-                if (previo != null) {
-                    previo.setSiguiente(actual.getSiguiente());
-                    if (actual == head) {
-                        head = actual.getSiguiente();
-                    }
-                } else {
-                    // Si solo hay un nodo
-                    if (actual.getSiguiente() == head) {
+                if (anterior == null) {
+                    if (head.getSiguiente() == head) {
                         head = null;
                     } else {
                         NodoCircular<T> ultimo = head;
@@ -44,15 +40,19 @@ public class C_enlazadas<T> {
                         head = head.getSiguiente();
                         ultimo.setSiguiente(head);
                     }
+                } else {
+                    anterior.setSiguiente(actual.getSiguiente());
+                    if (actual == head) head = actual.getSiguiente();
                 }
                 return true;
             }
-            previo = actual;
+            anterior = actual;
             actual = actual.getSiguiente();
         } while (actual != head);
         return false;
     }
-/// aca se buscan en el nodo
+
+    // BUSCAR
     public boolean buscar(T dato) {
         if (head == null) return false;
         NodoCircular<T> actual = head;
@@ -62,8 +62,9 @@ public class C_enlazadas<T> {
         } while (actual != head);
         return false;
     }
-///  y aca se muestran
-    public void mostrar() {
+
+    // VER
+    public void ver() {
         if (head == null) return;
         NodoCircular<T> actual = head;
         do {

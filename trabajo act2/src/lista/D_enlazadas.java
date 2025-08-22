@@ -1,50 +1,58 @@
-///aca es la parte de la insertar y son las 8:37 pm
-public class S_enlazadas<T> {
-    private NodoSimple<T> head;
+package lista;
 
-    public S_enlazadas() {
+public class D_enlazadas<T> {
+    private NodoDoble<T> head;
+
+    public D_enlazadas() {
         head = null;
     }
 
-    public void insertar(T dato) {
-        NodoSimple<T> nuevo = new NodoSimple<>(dato);
+    // AGREGAR
+    public void agregar(T dato) {
+        NodoDoble<T> nuevo = new NodoDoble<>(dato);
         if (head == null) {
             head = nuevo;
         } else {
-            NodoSimple<T> actual = head;
+            NodoDoble<T> actual = head;
             while (actual.getSiguiente() != null) {
                 actual = actual.getSiguiente();
             }
             actual.setSiguiente(nuevo);
+            nuevo.setAnterior(actual);
         }
     }
-///  aca se quitan las madres esas 9:54
+
+    // ELIMINAR
     public boolean eliminar(T dato) {
         if (head == null) return false;
         if (head.getDato().equals(dato)) {
             head = head.getSiguiente();
+            if (head != null) head.setAnterior(null);
             return true;
         }
-        NodoSimple<T> actual = head;
-        while (actual.getSiguiente() != null && !actual.getSiguiente().getDato().equals(dato)) {
+        NodoDoble<T> actual = head;
+        while (actual != null && !actual.getDato().equals(dato)) {
             actual = actual.getSiguiente();
         }
-        if (actual.getSiguiente() == null) return false;
-        actual.setSiguiente(actual.getSiguiente().getSiguiente());
+        if (actual == null) return false;
+        if (actual.getAnterior() != null) actual.getAnterior().setSiguiente(actual.getSiguiente());
+        if (actual.getSiguiente() != null) actual.getSiguiente().setAnterior(actual.getAnterior());
         return true;
     }
-///  aca se buscan las chingaderas esas 10:30
+
+    // BUSCAR
     public boolean buscar(T dato) {
-        NodoSimple<T> actual = head;
+        NodoDoble<T> actual = head;
         while (actual != null) {
             if (actual.getDato().equals(dato)) return true;
             actual = actual.getSiguiente();
         }
         return false;
     }
-///  aca se miran si en cas ode que la cosa esta funcione ya me rindo de poner la ora
-    public void mostrar() {
-        NodoSimple<T> actual = head;
+
+    // VER
+    public void ver() {
+        NodoDoble<T> actual = head;
         while (actual != null) {
             System.out.println(actual.getDato());
             actual = actual.getSiguiente();
